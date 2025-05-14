@@ -167,13 +167,17 @@
             triggered = true;
 
             try {
-                music2.volume = 0;
+                music2.volume = 0.1; // must be audible, even if low
                 await music2.play();
-                music2.pause();
-                music2.currentTime = 0;
-                music2.volume = 1;
+
+                // Wait a little for iOS to register playback
+                setTimeout(() => {
+                    music2.pause();
+                    music2.currentTime = 0;
+                    music2.volume = 1;
+                }, 500); // give it half a second
             } catch (err) {
-                console.error("Audio play/pause issue:", err);
+                console.error("Audio unlock error:", err);
             }
 
             setTimeout(function () {
