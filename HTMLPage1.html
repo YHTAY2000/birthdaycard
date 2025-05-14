@@ -162,19 +162,20 @@
         const strawberries = document.querySelectorAll('.strawberry');
         let triggered = false;
 
-        document.body.addEventListener('click', () => {
+       document.body.addEventListener('click', async () => {
             if (triggered) return;
             triggered = true;
 
-            // Unlock audio
-            music2.volume = 0;
-            music2.play().then(() => {
+            try {
+                music2.volume = 0;
+                await music2.play();
                 music2.pause();
                 music2.currentTime = 0;
                 music2.volume = 1;
-            });
+            } catch (err) {
+                console.error("Audio play/pause issue:", err);
+            }
 
-            // Start sequence
             setTimeout(function () {
                 ChatBox();
                 document.getElementById("chatbox").style.animation = "movetoleft 1s ease forwards";
